@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  spine-disease-deploy-sam
+
+  Sample SAM Template for spine-disease-deploy-sam
+
+Globals:
+  Function:
+    Timeout: 600
+
+Resources:
+  SpineMLPredictFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /predict
+            Method: post
+    Metadata:
+      DockerTag: python3.7-v1
+      DockerContext: ./predict
+      Dockerfile: Dockerfile
+
+Outputs:
+  SpineMLPredictApi:
+    Description: "API Gateway endpoint URL for Prod stage for MLPredict function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/predict/"
+  SpineMLPredictFunction:
+    Description: "ML Prediction Lambda Function ARN"
+    Value: !GetAtt SpineMLPredictFunction.Arn
+  SpineMLPredictFunctionIamRole:
+    Description: "Implicit IAM Role created for MLPredict function"
+    Value: !GetAtt SpineMLPredictFunctionRole.Arn

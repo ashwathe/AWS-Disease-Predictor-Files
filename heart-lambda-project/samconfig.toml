@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "heart-app"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-em49pbjvnsbp"
+s3_prefix = "heart-app"
+region = "us-west-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = ["HeartMLPredictFunction=855092383413.dkr.ecr.us-west-2.amazonaws.com/heartproject"]
